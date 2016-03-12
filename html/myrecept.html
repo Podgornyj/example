@@ -1,0 +1,11 @@
+<legend class="myreceptcontainer">
+	<button class="btn" ng-click = "addNewRecept()">Добавить рецепт</button>
+</legend>
+
+<div class="row">
+  <div class="col-xs-6 myreceptStyle" ng-repeat="recept in localDataRecept">
+  <h3>{{recept.title}}</h3>
+  <p>{{recept.description | limitTo:150 | dotdotdot}}</p>
+  <button class="btn" ng-click = "viewrecept(recept,$index)">Посмотреть рецепт</button>
+  </div>
+</div>

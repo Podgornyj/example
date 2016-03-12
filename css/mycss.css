@@ -1,0 +1,112 @@
+header {
+	height: 76px;
+	background-color: #f9f9f9;
+	position: fixed;
+	width: 100%;
+	z-index: 100;
+}
+.clearfix {
+ height: 100px; 
+}
+header .content {
+	height: 30px;
+	/*background-color: red;*/
+	position: relative;
+	bottom: -30px;
+	font-size: 24px;
+}
+header .recipe {
+	display: inline;
+	float: left;
+	margin-left: 20px;
+	font-weight: bold;
+}
+
+.nav1 {
+	display: inline;
+	float: right;
+	margin: 0;
+	margin-right: 20px;
+}
+
+.nav1 li {
+	display: inline;
+	font-size: 16px;
+	margin-left: 10px;
+	font-weight: bold;
+}
+
+.contentAll {
+	height: 700px;
+	width: 700px;
+	margin: 0 auto;
+}
+.contentAll h2 {
+	text-align: center;
+}
+
+.myreceptcontainer {
+	height: 70px;
+}
+
+.myreceptcontainer button {
+	margin-top: 25px;
+	float: right;
+}
+
+.form-horizontal .form-group {
+	/*width: 450px;*/
+	margin: 0 auto;
+	margin-top: 20px;
+}
+
+.myreceptStyle {
+	/*box-shadow: 0 0 20px 0 grey;*/
+	display: inline-block;
+	width: 45%;
+	height: 270px;
+	margin: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	/*white-space: nowrap;*/
+}
+
+.viewreceptbtn{
+	position: relative;
+	bottom: -10px
+}
+.viewreceptfoto {
+	width: 100%;
+
+}
+.pomestit {
+	display: inline-block;
+}
+.editrecept {
+	float: right;
+}
+
+.contpomestit{
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
+legend {
+	height: 60px;
+	padding-top: 15px;
+}
+.error {
+	position: absolute;
+    margin-left: 15px;
+    display: block;
+    color: red;
+    box-shadow: 1px 1px 1px 1px grey;
+}
+
+.ingr {
+	margin-bottom: 10px;
+}
+
+.submitrec {
+	margin-top: 25px;
+}

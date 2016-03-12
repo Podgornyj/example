@@ -1,0 +1,34 @@
+<ul class="nav nav-tabs">
+  <li class="active"><a data-target="#home" data-toggle="tab" aria-expanded="true">Избранное</a></li>
+  <li class=""><a data-target="#profile" data-toggle="tab" aria-expanded="false">Запланировано</a></li>
+  <li class=""><a data-target="#profile2" data-toggle="tab" aria-expanded="false" ng-click="viewReceptShop()">Покупки</a></li>
+  </ul>
+<div id="myTabContent" class="tab-content">
+  <div class="tab-pane fade active in" id="home">
+  <legend>Избранные рецепты</legend>
+    <div class="row">
+  <div class="col-xs-6 myreceptStyle" ng-repeat="recept in likedRecept">
+  <h3>{{recept.title}}</h3>
+  <p>{{recept.description | limitTo:150 | dotdotdot}}</p>
+  <button class="btn viewreceptbtn" ng-click = "viewrecept(recept)">Посмотреть рецепт</button>
+  </div>
+</div>
+  </div>
+  <div class="tab-pane fade" id="profile">
+    <legend>Запланированные рецепты</legend>
+       <div class="row">
+  <div class="col-xs-6 myreceptStyle" ng-repeat="recept in planned">
+  <h3>{{recept.title}}</h3>
+  <p>{{recept.description | limitTo:150 | dotdotdot}}</p>
+  <button class="btn viewreceptbtn" ng-click = "viewrecept(recept)">Посмотреть рецепт</button>
+  </div>
+</div>
+  </div>
+  <div class="tab-pane fade" id="profile2">
+    <legend>Список покупок по рецептам</legend>
+    	<ul>
+    		<li ng-repeat="item in myShop track by $index">{{item}}</li>
+    	</ul>
+    
+  </div>  
+</div>

@@ -1,0 +1,56 @@
+
+<form name="myForm" novalidate class="form-horizontal">
+  <fieldset>
+    <legend>Новый рецепт</legend>
+    <div class="form-group" ng-class="{'has-error': myForm.name.$invalid && myForm.name.$dirty }">
+      <label for="name" class="col-lg-2 control-label">Название</label>
+      <div class="col-lg-10">
+        <input maxlength="200" ng-maxlength="200" name="name" required type="text" class="form-control" id="name" placeholder="" ng-model="receprTitle">
+        <!-- <span class="error" ng-show="myForm.name.$invalid && myForm.name.$dirty">Введите название</span> -->
+        <span class="error" ng-show="myForm.name.$invalid && myForm.name.$dirty">{{getError(myForm.name.$error)}}</span>
+      </div>
+
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': myForm.description.$invalid && myForm.description.$dirty }">
+      <label for="textArea" class="col-lg-2 control-label">Описание</label>
+      <div class="col-lg-10">
+        <textarea maxlength="2000" ng-maxlength="2000" name="description" required class="form-control" rows="10" id="textArea" ng-model="receprDescription"></textarea>
+        <span class="error" ng-show="myForm.description.$invalid && myForm.description.$dirty">{{getError(myForm.description.$error)}}</span>
+      </div>
+    </div>
+
+     <div class="form-group" ng-class="{'has-error': myForm.url.$invalid && myForm.url.$dirty }">
+      <label for="url" class="col-lg-2 control-label">Фотография (url)</label>
+      <div class="col-lg-10">
+        <input maxlength="200" ng-maxlength="200" name="url" required type="url" class="form-control" id="url" placeholder="http://" ng-model="receprphotoUrl">
+        <span class="error" ng-show="myForm.url.$invalid && myForm.url.$dirty">{{getError(myForm.url.$error)}}</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="time" class="col-lg-2 control-label">Время готовки</label>
+      <div class="col-lg-10">
+        <input type="number" class="form-control" id="time" placeholder="cколько?" ng-model="receptTime">
+      </div>
+    </div>
+
+      <div class="form-group" ng-class="{'has-error': myForm.ingridient.$invalid && myForm.ingridient.$dirty }">
+      <label for="ingridients" class="col-lg-2 control-label">Ингридиенты</label>
+      <div class="col-lg-10">
+        <input name="ingridient" maxlength="100" ng-maxlength="100" required type="text" class="form-control ingr" id="ingridients" placeholder="Название и количество"  ng-model="item" ng-repeat="item in receptIngredients track by $index">     
+        <button class="btn" ng-click="addNewInput()">Добавить</button>
+      </div>      
+    </div>
+    
+
+     <div class="form-group" ng-class="{'has-error': myForm.instructions.$invalid && myForm.instructions.$dirty }">
+      <label for="instruction" class="col-lg-2 control-label">Инструкция</label>
+      <div class="col-lg-10">
+        <textarea name="instructions" ng-maxlength="10000" maxlength="10000" required class="form-control" rows="10" id="instruction" ng-model="receptInstruction"></textarea>
+        <span class="error" ng-show="myForm.instructions.$invalid && myForm.instructions.$dirty">{{getError(myForm.instructions.$error)}}</span>
+        <button type="submit" class="btn submitrec" ng-click="addNewReceptLocal()" ng-disabled="myForm.$invalid" ng:class="{true:'btn-danger', false:'btn-success'}[myForm.$invalid]">Сохранить</button>
+      </div>
+    </div>
+  </fieldset>
+</form>
