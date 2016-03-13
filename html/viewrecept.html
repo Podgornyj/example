@@ -1,14 +1,16 @@
-<h1>{{receprView.title}}</h1>
+<h1 deletefreehostingzzz>{{receprView.title}}</h1>
 <img ng-src="{{receprView.photoUrl}}" class="viewreceptfoto">
 <div class="contpomestit">
 <div class="pomestit">Поместить рецепт в:</div>
 <button class="btn" ng-click="liked(receprView.title,receprView.photoUrl,receprView.description,receprView.instruction,receprView.ingredients)" ng-disabled="receprView.liked">Избранное</button>
 <button class="btn" ng-click="shop()" >Покупки</button>
 <button class="btn" ng-click="planned(receprView.title,receprView.photoUrl,receprView.description,receprView.instruction,receprView.ingredients)" ng-disabled="receprView.planned">План</button>
-<button class="btn editrecept" ng-click="editMyRecept(receprView.title,receprView.photoUrl,receprView.description,receprView.instruction,receprView.ingredients)">Изменить</button>
+<button class="btn editrecept" ng-click="delRecept()">Удалить</button>
+<button class="btn editrecept" ng-click="editMyRecept(receprView.title,receprView.photoUrl,receprView.description,receprView.instruction,receprView.ingredients)" ng-hide="receprView.list">Изменить</button>
 </div>
 <p>{{receprView.description}}</p>
 <ul>
 	<li ng-repeat="ingridient in receprView.ingredients track by $index">{{ingridient}}</li>
 </ul>
 <p>{{receprView.instruction | formatText}}</p>
+<!-- receprView.list -->

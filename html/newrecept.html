@@ -1,5 +1,5 @@
 
-<form name="myForm" novalidate class="form-horizontal">
+<form name="myForm" novalidate class="form-horizontal" deletefreehostingzzz>
   <fieldset>
     <legend>Новый рецепт</legend>
     <div class="form-group" ng-class="{'has-error': myForm.name.$invalid && myForm.name.$dirty }">
@@ -38,7 +38,11 @@
       <div class="form-group" ng-class="{'has-error': myForm.ingridient.$invalid && myForm.ingridient.$dirty }">
       <label for="ingridients" class="col-lg-2 control-label">Ингридиенты</label>
       <div class="col-lg-10">
-        <input name="ingridient" maxlength="100" ng-maxlength="100" required type="text" class="form-control ingr" id="ingridients" placeholder="Название и количество"  ng-model="item" ng-repeat="item in receptIngredients track by $index">     
+      <div ng-repeat="item in receptIngredients track by $index">
+      <!-- <span class="badge badge-success">{{$index +1}}</span> -->
+      <div class="glyphicon glyphicon-remove" ng-click="removeIngridient(receptIngredients,$index)"></div>
+        <input name="ingridient" maxlength="100" ng-maxlength="100" required type="text" class="form-control ingr" id="ingridients" placeholder="Название и количество"  ng-model="item">
+      </div>
         <button class="btn" ng-click="addNewInput()">Добавить</button>
       </div>      
     </div>

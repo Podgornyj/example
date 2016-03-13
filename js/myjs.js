@@ -27,6 +27,11 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngStorage'])
         controller: "viewrecepr"
     });
 
+    $routeProvider.when("/index", {
+        templateUrl: "html/index.html",
+        controller: "indexCtrl"
+    });
+
     $routeProvider.otherwise({
         redirectTo: '/'
     });
@@ -46,13 +51,15 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngStorage'])
     }
     if (!localStorage.planned) {
         localStorage.setItem('planned', JSON.stringify([]))
-    }
+    }   
+ 
 }])
 
 
 //**********************controll Index ********************************
 .controller('indexCtrl', ['$scope', '$http', '$location', '$rootScope', function($scope, $http, $location, $rootScope) {
     $http.get("https://jsonblob.com/api/jsonBlob/56c089b3e4b01190df4ef1ce").then(function(response) {
+        
         $scope.myData = response.data.recipes;
         $scope.clickCarusel = function(recept) {
             $rootScope.receprCarusel = recept;
@@ -65,7 +72,7 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngStorage'])
 //*******************controll myrecept.html ****************************
 
 .controller('receprCtrl', ['$scope', '$location', '$localStorage', '$rootScope', function($scope, $location, $localStorage, $rootScope) {
-
+    
     $scope.addNewRecept = function() {
         $location.path('/newrecepr')
     };
@@ -80,25 +87,34 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngStorage'])
 
 //********************controll list.html******************************
 
-.controller('listCtrl', ['$scope', '$location', '$localStorage', '$rootScope', function($scope, $location, $localStorage, $rootScope) {
-
+.controller('listCtrl', ['$scope', '$location', '$localStorage', '$rootScope','$route', function($scope, $location, $localStorage, $rootScope,$route) {
+    
     $scope.viewReceptShop = function() {
+
         $scope.myShop = JSON.parse(localStorage.myReceptShop)
     }
     $scope.likedRecept = JSON.parse(localStorage.liked)
 
     $scope.planned = JSON.parse(localStorage.planned)
 
-    $scope.viewrecept = function(recept) {
-
+    $scope.viewrecept = function(recept, index) {
+        $rootScope.index = index
+        recept.list = true
+            //console.log(recept)
         $rootScope.receprView = recept;
         $location.path('/viewrecepr')
+    }
+
+    $scope.clearShop = function(){
+        localStorage.setItem('myReceptShop', JSON.stringify([]))
+        $route.reload();
     }
 
 }])
 
 //************************************************************************************************************
 .controller('viewrecepr', ['$scope', '$location', '$localStorage', '$rootScope', function($scope, $location, $localStorage, $rootScope) {
+    
     $scope.receprView = $rootScope.receprView;
     $scope.editMyRecept = function(title, url, description, instruction, ingridients) {
         $rootScope.receprCarusel = {
@@ -137,11 +153,11 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngStorage'])
         var likedLocal = JSON.parse(localStorage.liked)
         likedLocal.push(likedRecept)
         localStorage.setItem('liked', JSON.stringify(likedLocal))
-        //
+            //
     }
 
     $scope.planned = function(title, url, description, instruction, ingridients) {
-    
+
         $scope.receprView.planned = true
         var plannedRec = {
             "title": title,
@@ -149,12 +165,33 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngStorage'])
             "description": description,
             "instruction": instruction,
             "ingredients": ingridients,
-            "planned":true
+            "planned": true
         };
         var plan = JSON.parse(localStorage.planned)
         plan.push(plannedRec)
         localStorage.setItem('planned', JSON.stringify(plan))
-        //
+            //
+    }
+
+    $scope.delRecept = function(index) {
+        if ($scope.receprView.liked) {
+            var likedLocal = JSON.parse(localStorage.liked)
+            likedLocal.splice($rootScope.index, 1)
+            localStorage.setItem('liked', JSON.stringify(likedLocal))
+            $location.path('/list')
+        } else if ($scope.receprView.planned) {
+            var plan = JSON.parse(localStorage.planned)
+            plan.splice($rootScope.index, 1)
+            localStorage.setItem('planned', JSON.stringify(plan))
+            $location.path('/list')
+        } else {
+            var rec = JSON.parse(localStorage.myReceptLocal)
+            var index = $rootScope.index
+            rec.splice(index, 1)
+            localStorage.setItem('myReceptLocal', JSON.stringify(rec))
+            $location.path('/recepr')
+        }
+
     }
 
 }])
@@ -162,7 +199,7 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngStorage'])
 //**********************controll newrecept.html ************************
 
 .controller('newreceprCtrl', ['$scope', '$localStorage', '$location', '$rootScope', function($scope, $localStorage, $location, $rootScope) {
-
+    
     $scope.newReceprData = {};
     $scope.receprTitle = $rootScope.receprCarusel ? $rootScope.receprCarusel.title : "";
     $scope.receprDescription = $rootScope.receprCarusel ? $rootScope.receprCarusel.description : "";
@@ -218,15 +255,20 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngStorage'])
         $rootScope.receptIngredients.push('')
     }
 
-    $scope.getError = function(error){
-        if(error.required){
+    $scope.getError = function(error) {
+        if (error.required) {
             return "Поле не должно быть пустым"
-        } else if(error.url){
+        } else if (error.url) {
             return "Введите корректный URL"
-        }else if(error.maxlength){
+        } else if (error.maxlength) {
             return "Превышено допустимое количество символов"
         }
-        
+
+    }
+
+    $scope.removeIngridient = function(item, index) {
+        $rootScope.receptIngredients.splice(index, 1)
+
     }
 }])
 
@@ -256,6 +298,33 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngStorage'])
         restrict: 'A',
         link: function(scope, element, attributes) {
             element.carousel()
+        }
+    }
+})
+
+.directive('underline', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attributes) {
+            element.mouseenter(function() {
+                $(this).css('text-decoration', 'underline')
+            })
+
+            element.mouseleave(function() {
+                $(this).css('text-decoration', 'none')
+            })
+        }
+    }
+})
+
+.directive('deletefreehostingzzz', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attributes) {
+            var zzz = document.querySelectorAll(".cbalink")
+            for(var i=0;i<zzz.length;i++){
+            zzz[i].remove()
+    }   
         }
     }
 })

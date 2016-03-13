@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs" deletefreehostingzzz>
   <li class="active"><a data-target="#home" data-toggle="tab" aria-expanded="true">Избранное</a></li>
   <li class=""><a data-target="#profile" data-toggle="tab" aria-expanded="false">Запланировано</a></li>
   <li class=""><a data-target="#profile2" data-toggle="tab" aria-expanded="false" ng-click="viewReceptShop()">Покупки</a></li>
@@ -10,7 +10,7 @@
   <div class="col-xs-6 myreceptStyle" ng-repeat="recept in likedRecept">
   <h3>{{recept.title}}</h3>
   <p>{{recept.description | limitTo:150 | dotdotdot}}</p>
-  <button class="btn viewreceptbtn" ng-click = "viewrecept(recept)">Посмотреть рецепт</button>
+  <button class="btn viewreceptbtn" ng-click = "viewrecept(recept,$index)">Посмотреть рецепт</button>
   </div>
 </div>
   </div>
@@ -20,7 +20,7 @@
   <div class="col-xs-6 myreceptStyle" ng-repeat="recept in planned">
   <h3>{{recept.title}}</h3>
   <p>{{recept.description | limitTo:150 | dotdotdot}}</p>
-  <button class="btn viewreceptbtn" ng-click = "viewrecept(recept)">Посмотреть рецепт</button>
+  <button class="btn viewreceptbtn" ng-click = "viewrecept(recept,$index)">Посмотреть рецепт</button>
   </div>
 </div>
   </div>
@@ -29,6 +29,6 @@
     	<ul>
     		<li ng-repeat="item in myShop track by $index">{{item}}</li>
     	</ul>
-    
+    <button class="btn viewreceptbtn" ng-click = "clearShop()">Очистить</button>
   </div>  
 </div>

@@ -83,6 +83,7 @@ header .recipe {
 	display: inline-block;
 }
 .editrecept {
+	margin-left: 5px;
 	float: right;
 }
 
@@ -104,9 +105,33 @@ legend {
 }
 
 .ingr {
-	margin-bottom: 10px;
+	margin-bottom: 5px;
 }
 
 .submitrec {
 	margin-top: 25px;
+}
+.badge {
+	position: absolute;
+    left: -10px;
+    margin-top: 23px;
+}
+.glyphicon-remove {
+	float: right;
+    right: 10px;
+    top: 25px;
+}
+
+.nav2 {
+	display: inline;
+	float: right;
+	margin: 0;
+	margin-right: 30px;
+}
+
+.nav2 li {
+	display: inline;
+	font-size: 16px;
+	margin-left: 10px;
+	font-weight: bold;
 }
